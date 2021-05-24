@@ -13,9 +13,9 @@ int main(int argc, char* argv[])
     glewExperimental = GL_TRUE;
     glewInit();
 
-    Model model("/home/letrend/workspace/poseestimator/", argv[1]);// Iron_Man_mark_6.dae  model_simplified.sdf
+    Model model("/home/cc/ws/poseestimator/", argv[1]);// Iron_Man_mark_6.dae  model_simplified.sdf
 
-    Model room("/home/letrend/workspace/poseestimator/","room.dae", false);
+    Model room("/home/cc/ws/poseestimator/","room.dae", false);
 
     cv::namedWindow("camera image");
     cv::moveWindow("camera image", 0,0);

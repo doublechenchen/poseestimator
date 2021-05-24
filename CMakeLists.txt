@@ -7,7 +7,8 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
 # RelWithDebInfo, Release or Debug
-SET(CMAKE_BUILD_TYPE Debug FORCE)
+#SET(CMAKE_BUILD_TYPE Debug FORCE)
+SET(CMAKE_BUILD_TYPE Release)
 
 SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -g -std=c++11 -DMAGICKCORE_QUANTUM_DEPTH=16 -DMAGICKCORE_HDRI_ENABLE=0" ) # -fext-numeric-literals
 
@@ -40,7 +41,7 @@ find_package(OpenGL REQUIRED)
 # CUDA
 set(CUDA_TOOLKIT_ROOT_DIR /usr/local/cuda-7.5)
 find_package(CUDA REQUIRED)
-set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} -DDEBUG -G -Xcompiler -g -gencode=arch=compute_52,code=sm_52 --use_fast_math)
+set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} -DDEBUG -G -Xcompiler -g -gencode=arch=compute_50,code=sm_50 --use_fast_math)
 
 # OpenCV
 find_package(OpenCV 3.1.0 COMPONENTS opencv_core opencv_highgui opencv_imgproc opencv_imgcodecs opencv_calib3d opencv_videoio REQUIRED)

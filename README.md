@@ -25,7 +25,6 @@ cd path/to/poseestimator/bin
 ./poseestimator mesh_model lambda_trans lambda_rot
 ```
 The mesh_model is the model you want to use (can be .dae or .sdf file). The folder will be searched for this model and the first instance will be used. The two lambda parameters define the initial learning rate for translation and rotation. Example:
-```
-#!bash
-./poseestimator sphere.dae 0.00000001 0.0000001
+```bash
+./poseestimation duck.dae 0.00000001 0.0000001
 ```
