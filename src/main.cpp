@@ -27,12 +27,17 @@ int main(int argc, char* argv[])
     cv::moveWindow("Rc", 640,520);
     cv::namedWindow("result");
     cv::moveWindow("result", 1280,520);
+    cv::namedWindow("nasty");            // added by Errol
+    cv::moveWindow("nasty", 1280, 0); // added by Errol
 
 //
 //    // run the main loop
     bool running = true;
     VectorXd pose_estimator(6);
-    pose_estimator << 0,0,-1,0,0,0;
+//    pose_estimator << 0,0,-1,0,0,0; // commented by Errol
+      pose_estimator << -0.0124695,0.0256181,-0.2780929,3.0794,0.8246,0.2978; // added by Errol - m, radius
+//    pose_estimator << -0.0124695,0.0256181,-0.2780929,176.5259,47.27,17.07132; // added by Errol - m, degree
+//    pose_estimator << -12.4695,25.6181,278.0929,3.0794,0.8246,0.2978; // added by Errol - mm, radius (original)
 
     char k;
 
@@ -57,17 +62,27 @@ int main(int argc, char* argv[])
         static uint count = 0;
 
         VectorXd pose(6),grad(6);
-        pose << 0,0,-1,degreesToRadians(0),degreesToRadians(0),degreesToRadians(0);
+        pose << 0,0,-1,degreesToRadians(0),degreesToRadians(0),degreesToRadians(0);  // Questioned by Errol
         Mat img_camera;
 
-        cout << "press ENTER to run tracking, press SPACE to toggle first person view (use WASD-keys to move around)" << endl;
-        while(!sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
-            model.updateViewMatrix(window);
-            room.renderer->ViewMatrix = model.renderer->ViewMatrix;
-            room.render(img_camera, true);
-            model.render(img_camera, false, "color_simple");
-//            model.render(img_camera, true, "color_simple");
-            window.display();
+        /* adjusted by Errol */
+        if(strcmp(argv[1], "metal.dae") == 0) {
+            std::cout << "perform a nasty test" << std::endl;
+            img_camera = cv::imread("/home/cc/ws/poseestimator/models/metal/1.jpg"); // Load the actual camera image
+            while(!sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+              cv::imshow("nasty", img_camera); // Display the actual camera image
+              cv::waitKey(10);
+            }
+        } else {
+            cout << "press ENTER to run tracking, press SPACE to toggle first person view (use WASD-keys to move around)" << endl;
+            while(!sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+                model.updateViewMatrix(window);
+                room.renderer->ViewMatrix = model.renderer->ViewMatrix;
+                room.render(img_camera, true);
+                model.render(img_camera, false, "color_simple");
+//                model.render(img_camera, true, "color_simple");
+                window.display();
+            }
         }
 
         float lambda_trans = atof(argv[2]), lambda_rot = atof(argv[3]);
